@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#RSA16 Keyword Cross-Mentions | Chord Diagram</title>
+    <meta name="description" content="Exploring some keyword relations from #RSA16" />
+    <meta name="keywords" content="rhetoric, rhetoric society of america, infographic, d3.js" />
+    <meta name="author" content="Chris Lindgren" />
+    <!-- meta -->
+    <meta property="og:url" content="http://www.clindgrencv.com/rsa16tweets/chord-diagram.html" />
+    <meta property="og:title" content="#RSA16 Keyword Cross-Mentions" />
+    <meta property="og:description" content="Exploring some keyword relations from #RSA16" />
+    <meta property="og:image" content="images/chord-diagram-screenshot.png" />
+
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,700' rel='stylesheet' type='text/css' />
+
+    <script type="text/javascript" src="js/modernizr.custom.79639.js"></script>
+    <!--[if lte IE 8]><style>.main{display:none;} .support-note .note-ie{display:block;}</style><![endif]-->
+    <!-- js libs -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/d3.3.5.6.min.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/bootstrap.tooltip.js"></script>
+    <script src="js/bootstrap.popover.js"></script>
+    <script src="js/d3.layout.chord.sort.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>#RSA16 Keyword Cross-Mentions | Chord Diagram</h1>
+      </header>
+
+      <section class="main">
+        <div id="chart-container">
+          <div id="chart"></div>
+
+          <div id="citations">
+            <h3>
+              Citations
+            </h3>
+            <ul>
+              <li>
+                Chord diagram modified from <a href="http://www.visualcinnamon.com/2016/06/orientation-gradient-d3-chord-diagram.html" target="_blank">Nadieh Bremer's chord diagram tutorial</a>.
+              <li>
+                Data from #RSA16 conference Twitter hashtag.
+              <li>
+                See the code and references within the code in the repository hosted on Github: <a href="https://github.com/lingeringcode/rsa16-keyword-chord" target="_blank" rel="noopener">https://github.com/lingeringcode/rsa16-keyword-chord</a>.
+            </ul>
+          </div>
+
+          <div id="short-description">
+            <h3>
+              Description of the data
+            </h3>
+
+            <ul>
+              <li>
+                More general source and processing information can be read in the larger project <a href="https://github.com/lingeringcode/rsa16-keyword-chord/blob/master/README.md" target="_blank">README</a>.
+              <li>
+                Asterisks indicate multiple words searched under the particular keyword. I used regular expressions to catch plurals, noun or verb forms of a particular keyword. The list of regular expressions used are as follows:
+                <ul>
+                  <li>
+                    Accessibility == (/baccess\S*|\binaccess\S*)
+                  <li>
+                    Change == (\bchang\S*|\brhetoricandchange\b)
+                  <li>
+                    Digital == ((\bdig\S*))
+                  <li>
+                    Disability == (disab\S*)|(\bable\S*))
+                  <li>
+                    Embodied == ((\bbod\S*)|(embodi\S*))
+                  <li>
+                    Feminist == (fem\S*)
+                  <li>
+                    Institution == (institution\S*)
+                  <li>
+                    Invisible == (invisibl\S*)
+                  <li>
+                    Machine == (\bmachin\S*)
+                  <li>
+                    Material == (material\S*)
+                  <li>
+                    Memory == ((\bmemor\S*))
+                  <li>
+                    Method == (method\S*)
+                  <li>
+                    Object == ((\bobj\S*|ooo))
+                  <li>
+                    Public == (public\S*)
+                  <li>
+                    Race == ((\brac\S*))
+                  <li>
+                    Sex == (\bsex\S*|\bbisex\S*|\bheterosex\S*|\bcishet)
+                </ul>
+              <li>
+                Keywords were chosen by overall frequency in the total corpus of tweets, as well as a more qualitative munging of the data to check for cross-mentions. The <code>matrix</code> produced is as follows and is located in the <code>chord-diagram-script.js</code> file:
+                <pre>
+  // rsa16 keyword cross-mentions
+  var matrix = [
+    [0,12,0,0,0,0,0,0,6,0,26,0,0,0,10,6,0,8,0,0,20,0],      // material
+    [12,0,30,28,0,0,21,0,0,0,0,41,72,0,14,0,0,0,0,0,0,12],  // disability
+    [0,30,0,30,0,0,0,13,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0],     // mental
+    [0,28,30,0,30,6,36,0,23,16,13,0,0,24,0,14,0,0,0,0,0,0], // race
+    [0,0,0,30,0,8,0,0,0,0,6,0,0,6,0,0,0,0,0,0,0,0],         // black
+    [0,0,0,6,0,0,8,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0],         // white
+    [0,21,0,36,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0],     // latin/x
+    [0,0,6,0,0,13,0,0,0,0,0,0,0,18,0,0,0,0,0,0,0,0],        // invisible
+    [6,0,0,24,0,0,0,0,0,42,0,0,0,0,22,12,0,0,0,0,0,0],      // feminist
+    [0,0,0,16,0,0,0,0,42,0,0,6,0,0,0,8,0,0,0,0,0,0],        // method
+    [26,0,0,13,6,0,0,0,0,0,0,0,0,0,34,6,0,22,0,24,0,0],     // embodied
+    [0,48,0,0,0,0,0,0,0,6,0,0,50,0,27,0,0,0,8,28,0,0],      // accessibility
+    [0,72,0,0,0,0,0,0,0,0,0,50,0,0,0,0,0,0,0,0,0,0],        // institutional
+    [0,0,0,23,6,0,0,18,0,0,0,0,0,0,26,0,0,0,6,6,14,0],      // public
+    [10,14,0,0,0,0,0,0,22,0,34,27,0,26,0,0,12,0,12,6,0,0,0],// change
+    [6,0,0,14,0,0,0,0,12,8,6,0,0,0,0,0,6,0,0,0,0,0],        // gender
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,6,0,0,0,0,0,0],         // sex
+    [8,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,0,8,0,0,0],         // object
+    [8,0,0,0,0,0,0,0,0,0,22,0,0,6,12,0,0,8,0,86,6,0],       // archive
+    [0,0,0,0,0,0,0,0,0,0,24,28,0,6,6,0,0,0,86,0,12,6],      // digital
+    [20,0,0,0,0,0,6,0,0,0,0,0,0,14,0,0,0,0,6,12,0,0],       // memory
+    [0,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0],         // machine
+  ];
+                </pre>
+              <li>
+                Keyword files were created individually with my <code>sankey-counter.py</code> script. From there, I qualitatively checked and verified the cross-mentions, which resulted in the above <code>matrix</code> data structure.
+              <li>
+                <code>stopwords</code> were also used in the <code>sankey-counter.py</code> script.
+              <li>
+                Cross-mentions were tallied for each keyword with a &gt;5 minimum.
+              <li>
+                Retweets are counted in the tally.
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script src="js/chord-diagram-script.js"></script>
+  </body>
+</html>
